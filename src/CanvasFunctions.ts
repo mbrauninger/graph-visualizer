@@ -7,6 +7,7 @@ import {
   MORE_HEURISTIC_X_OFFSET,
   LESS_HEURISTIC_X_OFFSET,
 } from "./Constants";
+import { drawPath } from "./GraphFunctions";
 
 /**
  * Draws a graph node.
@@ -61,7 +62,7 @@ const drawNode = (
 };
 
 /**
- *
+ * Draws an edge weight.
  * @param ctx - The canvas context object.
  * @param x - The x coordinate of the weight.
  * @param y - The y coordinate of the weight.
@@ -184,4 +185,52 @@ export function drawCanvas(
 
   ctx.clearRect(0, 0, width, height);
   drawGraph(ctx, graph);
+}
+
+/**
+ * 
+ * @param x - The x coordinate of the click in the canvas.
+ * @param y - The y coordinate of the click in the canvas.
+ * @param graph - The graph.
+ * @param finished - If the traversal visualization is finished.
+ * @param distances - A map of the calculated distance to each node.
+ * @param paths - An object that maps each node to the lowest-cost path.
+ * @param savedFinishedGraph - The saved graph to revert to if a request to change the displayed
+ *                             path occurs.
+ * @param setGraph - The function to set the graph with the updated path.
+ */
+export function handleNodeClick(x: number, y: number, graph: Graph, finished: boolean, distances: Record<string, number>, paths: Record<string, string[]>, savedFinishedGraph: Graph, setGraph: Function) {
+  if (!finished) {
+    return;
+  }
+  for (const node in graph) {
+    const distance = Math.sqrt(Math.pow(x - graph[node].attributes.x, 2) + Math.pow(y - graph[node].attributes.y, 2));
+    if (distance < NODE_RADIUS) {
+        if (distances[node] === Infinity) return;
+        const currentGraph = JSON.parse(
+          JSON.stringify(savedFinishedGraph),
+        );
+        drawPath(currentGraph, paths[node], finished);
+        setGraph(currentGraph);
+        break;
+    }
+  }
+
+}
+
+/**
+ * Detects if a point on the canvas is inside a node.
+ * @param x - The x-coordinate of the point.
+ * @param y - The y coordinate of the point.
+ * @param graph - The graph.
+ * @returns - A boolean representing whether or not the point is inside a node.
+ */
+export function isPointInsideNode(x: number, y: number, graph: Graph): boolean {
+  for (const node in graph) {
+    const distance = Math.sqrt(Math.pow(x - graph[node].attributes.x, 2) + Math.pow(y - graph[node].attributes.y, 2));
+    if (distance < NODE_RADIUS) {
+      return true;
+    }
+  }
+  return false;
 }

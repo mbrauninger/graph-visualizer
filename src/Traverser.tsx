@@ -15,7 +15,7 @@ import {
   GRAPH_SIZE,
 } from "./Constants";
 import { BottomButton } from "./BottomButton";
-import { drawCanvas } from "./CanvasFunctions";
+import { drawCanvas, handleNodeClick, isPointInsideNode } from "./CanvasFunctions";
 import PathTable from "./PathTable";
 
 const Traverser = () => {
@@ -58,6 +58,36 @@ const Traverser = () => {
   const [selectedTraversal, setSelectedTraversal] = useState(
     TraversalTypes.DIJKSTRA,
   );
+
+  /**
+   * Detects canvas clicks and mouse moves. If the click is inside a node and the traversal is
+   * finished, draw a path. If the mouse is inside a node, make the mouse a pointer.
+   */
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    function handleCanvasClick (event: MouseEvent) {
+      if (canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        handleNodeClick(x, y, graph, finished, distances[distances.length - 1], paths, savedFinishedGraph, setGraph);
+      }
+    };
+    function handleMouseMove (event: MouseEvent) {
+      if (canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        canvas.style.cursor = isPointInsideNode(x, y, graph) ? 'pointer' : 'default';
+      }
+    };
+    canvas?.addEventListener('click', handleCanvasClick);
+    canvas?.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      canvas?.removeEventListener('click', handleCanvasClick);
+      canvas?.addEventListener('mousemove', handleMouseMove);
+    };
+  }, [finished]);
 
   /**
    * Performs one step in the traversal algorithm and updates the listed traversal.

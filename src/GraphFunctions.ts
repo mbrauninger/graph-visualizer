@@ -64,7 +64,7 @@ export function generateGraph(
   let index = 0;
   const graph: Graph = {};
   let evenRow = false;
-  let y = DISPLAY_HEIGHT / 9;
+  let y = DISPLAY_HEIGHT / (window.innerWidth <= 768 ? 8 : 9);
   while (index < size) {
     let i = 0;
     if (!evenRow) {
@@ -97,7 +97,7 @@ export function generateGraph(
       }
     }
     evenRow = !evenRow;
-    y += (2 * DISPLAY_HEIGHT) / 15;
+    y += (2 * DISPLAY_HEIGHT) / (window.innerWidth <= 768 ? 14 : 15);
   }
 
   for (let i = 0; i < size; i++) {
