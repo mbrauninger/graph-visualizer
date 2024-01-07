@@ -34,7 +34,6 @@ const ScrollableTable: React.FC<ScrollableTableProps> = ({ data }) => {
       component={Paper}
       style={{
         height: window.innerWidth <= 768 ? "70vh" : "80vh",
-        width: "275px",
         overflowY: "auto",
         marginLeft: "10px",
         position: "relative",

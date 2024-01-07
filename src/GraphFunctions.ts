@@ -33,6 +33,7 @@ export function generateGraph(
   endNode: string,
 ) {
   function getX(i: number, evenRow: boolean) {
+    console.log(DISPLAY_WIDTH)
     if (evenRow) {
       if (i === 0) {
         return DISPLAY_WIDTH / 12;
@@ -45,6 +46,7 @@ export function generateGraph(
       } else if (i === 4) {
         return (9 * DISPLAY_WIDTH) / 12;
       } else {
+        console.log((11 * DISPLAY_WIDTH) / 12)
         return (11 * DISPLAY_WIDTH) / 12;
       }
     } else {
@@ -57,6 +59,7 @@ export function generateGraph(
       } else if (i === 3) {
         return (2 * DISPLAY_WIDTH) / 3;
       } else {
+        console.log((11 * DISPLAY_WIDTH) / 12)
         return (5 * DISPLAY_WIDTH) / 6;
       }
     }
@@ -152,13 +155,13 @@ function generateHeuristic(
  * @param index - The index of the alphabet array to use (alphabet contains all node names).
  * @param offset - The offset from the alphabet index.
  * @param graph - The graph.
- * @returns
+ * @returns The weight of the neighbor if it exists, otherwise 0.
  */
 function getNeighborWeightIfExists(
   index: number,
   offset: number,
   graph: Graph,
-) {
+): number {
   const currentNode = ALPHABET[index];
   const neighbors = new Set(
     graph[ALPHABET[index + offset]].neighbors.map(
@@ -167,15 +170,16 @@ function getNeighborWeightIfExists(
   ).has(currentNode)
     ? graph[ALPHABET[index + offset]].neighbors
     : [];
+  let output = 0;
   if (neighbors.length) {
     for (const neighbor of neighbors) {
       if (neighbor.nodeName === currentNode) {
-        return neighbor.weight;
+        output = neighbor.weight;
+        break;
       }
     }
-  } else {
-    return 0;
   }
+  return output;
 }
 
 /**

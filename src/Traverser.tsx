@@ -70,6 +70,7 @@ const Traverser = () => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
+        console.log('click at', x)
         handleNodeClick(x, y, graph, finished, distances[distances.length - 1], paths, savedFinishedGraph, setGraph);
       }
     };
@@ -292,17 +293,22 @@ const Traverser = () => {
         }}
       >
         {window.innerWidth > 768 && (
-          <PathTable
-            data={distances[getDistancesStep()]}
-            graph={graph}
-            setGraph={setGraph}
-            paths={paths}
-            drawPath={drawPath}
-            finished={finished}
-            from={from[getDistancesStep()]}
-            savedFinishedGraph={savedFinishedGraph}
-            aStar={aStarValues[getDistancesStep()]}
-          />
+          <div style={{
+            width: `${20}%`,
+            paddingRight: `${1}%`
+          }}>
+            <PathTable
+              data={distances[getDistancesStep()]}
+              graph={graph}
+              setGraph={setGraph}
+              paths={paths}
+              drawPath={drawPath}
+              finished={finished}
+              from={from[getDistancesStep()]}
+              savedFinishedGraph={savedFinishedGraph}
+              aStar={aStarValues[getDistancesStep()]}
+            />
+          </div>
         )}
         <div
           style={{
@@ -339,7 +345,13 @@ const Traverser = () => {
             New Graph
           </Button>
         </div>
-        {window.innerWidth > 768 && <ScrollableTable data={listedTraversal} />}
+        {window.innerWidth > 768 && 
+        <div style={{
+          width: `${20}%`
+        }}>
+          <ScrollableTable data={listedTraversal} />
+        </div>
+        }
       </div>
       <div
         style={{

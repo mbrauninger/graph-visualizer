@@ -33,7 +33,6 @@ const PathTable = (props: PathTableProps) => {
       component={Paper}
       style={{
         height: window.innerWidth <= 768 ? "70vh" : "80vh",
-        width: "286px",
         marginLeft: "10px",
         position: "relative",
         top: 2,
