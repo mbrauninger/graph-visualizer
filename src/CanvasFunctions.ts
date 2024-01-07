@@ -93,9 +93,9 @@ function getWeightColor(
   baseNodeName: string,
   neighborNodeName: string,
 ) {
-  const isBaseChecking = graph[baseNodeName].attributes.state === "newNode";
+  const isBaseChecking = graph[baseNodeName].attributes.state === "new node";
   const isNeighborChecking =
-    graph[neighborNodeName].attributes.state === "checkAdj";
+    graph[neighborNodeName].attributes.state === "neighbor";
 
   const isNeighborInPath =
     (graph[baseNodeName].attributes.state.includes("path") &&
@@ -142,11 +142,11 @@ export const drawGraph = (ctx: CanvasRenderingContext2D, graph: Graph) => {
     for (let baseNodeName in graph) {
       let color = "white";
       if (
-        graph[baseNodeName].attributes.state === "checkAdj" ||
+        graph[baseNodeName].attributes.state === "neighbor" ||
         graph[baseNodeName].attributes.state.includes("path")
       ) {
         color = "yellow";
-      } else if (graph[baseNodeName].attributes.state === "newNode") {
+      } else if (graph[baseNodeName].attributes.state === "new node") {
         color = "orange";
       } else if (graph[baseNodeName].attributes.state === "processed") {
         color = "green";

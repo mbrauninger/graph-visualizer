@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -47,7 +46,6 @@ const PathTable = (props: PathTableProps) => {
             ) : null}
             <TableCell sx={{ fontSize: 15 }}>Min Path</TableCell>
             <TableCell sx={{ fontSize: 15 }}>From</TableCell>
-            {/* Add more table headers as needed */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -69,7 +67,7 @@ const PathTable = (props: PathTableProps) => {
               }}
             >
               <TableCell
-                sx={{ paddingLeft: 4, paddingTop: 0.5, paddingBottom: 0.4 }}
+                sx={{ paddingLeft: 4, paddingTop: 0.5, paddingBottom: 0.4, fontFamily: "Courier, monospace" }}
               >
                 {key}
               </TableCell>
@@ -79,6 +77,7 @@ const PathTable = (props: PathTableProps) => {
                     textAlign: "center",
                     paddingTop: 0.5,
                     paddingBottom: 0.4,
+                    fontFamily: "Courier, monospace"
                   }}
                 >
                   {props.aStar[key] === Infinity ? "Inf" : props.aStar[key]}
@@ -90,6 +89,7 @@ const PathTable = (props: PathTableProps) => {
                   paddingTop: 0.5,
                   paddingBottom: 0.4,
                   paddingRight: props.aStar ? 3 : 4.4,
+                  fontFamily: "Courier, monospace"
                 }}
               >
                 {props.data[key] === Infinity ? "Inf" : props.data[key]}
@@ -100,11 +100,11 @@ const PathTable = (props: PathTableProps) => {
                   paddingTop: 0.5,
                   paddingBottom: 0.4,
                   paddingRight: props.aStar ? 2.1 : 3.7,
+                  fontFamily: "Courier, monospace"
                 }}
               >
                 {props.from[key]}
               </TableCell>
-              {/* Add more table cells as needed */}
             </TableRow>
           ))}
         </TableBody>

@@ -33,7 +33,6 @@ export function generateGraph(
   endNode: string,
 ) {
   function getX(i: number, evenRow: boolean) {
-    console.log(DISPLAY_WIDTH)
     if (evenRow) {
       if (i === 0) {
         return DISPLAY_WIDTH / 12;
@@ -46,7 +45,6 @@ export function generateGraph(
       } else if (i === 4) {
         return (9 * DISPLAY_WIDTH) / 12;
       } else {
-        console.log((11 * DISPLAY_WIDTH) / 12)
         return (11 * DISPLAY_WIDTH) / 12;
       }
     } else {
@@ -59,7 +57,6 @@ export function generateGraph(
       } else if (i === 3) {
         return (2 * DISPLAY_WIDTH) / 3;
       } else {
-        console.log((11 * DISPLAY_WIDTH) / 12)
         return (5 * DISPLAY_WIDTH) / 6;
       }
     }
@@ -467,7 +464,7 @@ export const updateGraphByValue = (
   for (const nodeName in graph) {
     if (
       graph[nodeName].attributes.state !== "processed" &&
-      graph[nodeName].attributes.state !== "newNode" &&
+      graph[nodeName].attributes.state !== "new node" &&
       nodeName !== targetNodeName
     ) {
       graph[nodeName].attributes.state = "clean";

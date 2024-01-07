@@ -70,7 +70,6 @@ const Traverser = () => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        console.log('click at', x)
         handleNodeClick(x, y, graph, finished, distances[distances.length - 1], paths, savedFinishedGraph, setGraph);
       }
     };
@@ -174,7 +173,7 @@ const Traverser = () => {
     setPaths(output.paths);
     setFrom(output.from);
     if (traversalFunc === aStar) {
-      setAStarValues([output.aStar]);
+      setAStarValues(output.aStar);
     } else {
       setAStarValues([]);
     }

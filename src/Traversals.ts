@@ -70,7 +70,7 @@ export function dijkstra(graph: Graph, startingNode: string, endNode: string) {
         from: from,
       };
     }
-    traversal.push({ state: "newNode", value: currentNode.nodeName });
+    traversal.push({ state: "new node", value: currentNode.nodeName });
     distances.push({ ...output });
     from.push({ ...currentFromMap });
     visited.add(currentNode.nodeName);
@@ -91,7 +91,7 @@ export function dijkstra(graph: Graph, startingNode: string, endNode: string) {
           distance: output[neighbor.nodeName],
         });
         traversal.push({
-          state: "checkAdj",
+          state: "neighbor",
           value: neighbor.nodeName,
         });
         distances.push({ ...output });
@@ -161,7 +161,7 @@ export function aStar(graph: Graph, startingNode: string, endNode: string) {
         aStar: aStar,
       };
     }
-    traversal.push({ state: "newNode", value: currentNode.nodeName });
+    traversal.push({ state: "new node", value: currentNode.nodeName });
     distances.push({ ...output });
     from.push({ ...currentFromMap });
     aStar.push({ ...currentAStar });
@@ -201,7 +201,7 @@ export function aStar(graph: Graph, startingNode: string, endNode: string) {
             graph[neighbor.nodeName].attributes.heuristic,
         });
         traversal.push({
-          state: "checkAdj",
+          state: "neighbor",
           value: neighbor.nodeName,
         });
         distances.push({ ...output });
@@ -265,7 +265,7 @@ export function bfs(graph: Graph, startingNode: string, endNode: string) {
         aStar: aStar,
       };
     }
-    traversal.push({ state: "newNode", value: currentNode.nodeName });
+    traversal.push({ state: "new node", value: currentNode.nodeName });
     distances.push({ ...output });
     from.push({ ...currentFromMap });
     visited.add(currentNode.nodeName);
@@ -281,7 +281,7 @@ export function bfs(graph: Graph, startingNode: string, endNode: string) {
           ];
           currentFromMap[neighbor.nodeName] = currentNode.nodeName;
         }
-        traversal.push({ state: "checkAdj", value: neighbor.nodeName });
+        traversal.push({ state: "neighbor", value: neighbor.nodeName });
         distances.push({ ...output });
         queue.enqueue({
           nodeName: neighbor.nodeName,
@@ -347,7 +347,7 @@ export function dfs(graph: Graph, startingNode: string, endNode: string) {
         aStar: aStar,
       };
     }
-    traversal.push({ state: "newNode", value: currentNode.nodeName });
+    traversal.push({ state: "new node", value: currentNode.nodeName });
     distances.push({ ...output });
     from.push({ ...currentFromMap });
     visited.add(currentNode.nodeName);
@@ -363,7 +363,7 @@ export function dfs(graph: Graph, startingNode: string, endNode: string) {
           ];
           currentFromMap[neighbor.nodeName] = currentNode.nodeName;
         }
-        traversal.push({ state: "checkAdj", value: neighbor.nodeName });
+        traversal.push({ state: "neighbor", value: neighbor.nodeName });
         distances.push({ ...output });
         stack.push({
           nodeName: neighbor.nodeName,
