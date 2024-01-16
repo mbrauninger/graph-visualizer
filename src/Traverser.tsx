@@ -15,8 +15,14 @@ import {
   GRAPH_SIZE,
 } from "./Constants";
 import { BottomButton } from "./BottomButton";
-import { drawCanvas, handleNodeClick, isPointInsideNode } from "./CanvasFunctions";
+import {
+  drawCanvas,
+  handleNodeClick,
+  isPointInsideNode,
+} from "./CanvasFunctions";
 import PathTable from "./PathTable";
+import QuestionButton from "./QuestionButton";
+import { InfoModal } from "./InfoModal";
 
 const Traverser = () => {
   const [playing, setPlaying] = useState(false);
@@ -27,7 +33,8 @@ const Traverser = () => {
   );
   const [sortingSpeed, setSortingSpeed] = useState(50);
   const [updateTraversalFlag, setUpdateTraversalFlag] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [traverseAll, setTraverseAll] = useState(false);
   const [startingNode, setStartingNode] = useState("A");
   const [endNode, setEndNode] = useState("l");
@@ -65,27 +72,38 @@ const Traverser = () => {
    */
   useEffect(() => {
     const canvas = canvasRef.current;
-    function handleCanvasClick (event: MouseEvent) {
+    function handleCanvasClick(event: MouseEvent) {
       if (canvas) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        handleNodeClick(x, y, graph, finished, distances[distances.length - 1], paths, savedFinishedGraph, setGraph);
+        handleNodeClick(
+          x,
+          y,
+          graph,
+          finished,
+          distances[distances.length - 1],
+          paths,
+          savedFinishedGraph,
+          setGraph,
+        );
       }
-    };
-    function handleMouseMove (event: MouseEvent) {
+    }
+    function handleMouseMove(event: MouseEvent) {
       if (canvas) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        canvas.style.cursor = isPointInsideNode(x, y, graph) ? 'pointer' : 'default';
+        canvas.style.cursor = isPointInsideNode(x, y, graph)
+          ? "pointer"
+          : "default";
       }
-    };
-    canvas?.addEventListener('click', handleCanvasClick);
-    canvas?.addEventListener('mousemove', handleMouseMove);
+    }
+    canvas?.addEventListener("click", handleCanvasClick);
+    canvas?.addEventListener("mousemove", handleMouseMove);
     return () => {
-      canvas?.removeEventListener('click', handleCanvasClick);
-      canvas?.addEventListener('mousemove', handleMouseMove);
+      canvas?.removeEventListener("click", handleCanvasClick);
+      canvas?.addEventListener("mousemove", handleMouseMove);
     };
   }, [finished]);
 
@@ -259,6 +277,15 @@ const Traverser = () => {
     <div>
       <div
         style={{
+          position: "absolute",
+          right: window.innerWidth <= 768 ? 15 : 0,
+          top: window.innerWidth <= 768 ? 15 : 0,
+        }}
+      >
+        <QuestionButton setModalOpen={setInfoModalOpen} />
+      </div>
+      <div
+        style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -267,8 +294,8 @@ const Traverser = () => {
         <h1>Graph Traverser</h1>
       </div>
       <SettingsModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
+        modalOpen={settingsModalOpen}
+        setModalOpen={setSettingsModalOpen}
         nodes={Object.keys(graph)}
         startingNode={startingNode}
         setStartingNode={setStartingNode}
@@ -281,6 +308,7 @@ const Traverser = () => {
         traverseAll={traverseAll}
         setTraverseAll={setTraverseAll}
       />
+      <InfoModal modalOpen={infoModalOpen} setModalOpen={setInfoModalOpen} />
       <div
         style={{
           display: "flex",
@@ -292,10 +320,12 @@ const Traverser = () => {
         }}
       >
         {window.innerWidth > 768 && (
-          <div style={{
-            width: `${20}%`,
-            paddingRight: `${1}%`
-          }}>
+          <div
+            style={{
+              width: `${20}%`,
+              paddingRight: `${1}%`,
+            }}
+          >
             <PathTable
               data={distances[getDistancesStep()]}
               graph={graph}
@@ -344,13 +374,15 @@ const Traverser = () => {
             New Graph
           </Button>
         </div>
-        {window.innerWidth > 768 && 
-        <div style={{
-          width: `${20}%`
-        }}>
-          <ScrollableTable data={listedTraversal} />
-        </div>
-        }
+        {window.innerWidth > 768 && (
+          <div
+            style={{
+              width: `${20}%`,
+            }}
+          >
+            <ScrollableTable data={listedTraversal} />
+          </div>
+        )}
       </div>
       <div
         style={{
@@ -358,7 +390,6 @@ const Traverser = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: "5px",
           position: "relative",
           left: 5,
         }}
@@ -371,7 +402,11 @@ const Traverser = () => {
           <BottomButton text="Play" func={handleStart} />
           <BottomButton text="Step" func={performStep} />
           <BottomButton text="Reset" func={handleReset} />
-          <BottomButton text="Settings" func={setModalOpen} funcArg={true} />
+          <BottomButton
+            text="Settings"
+            func={setSettingsModalOpen}
+            funcArg={true}
+          />
         </div>
       </div>
     </div>

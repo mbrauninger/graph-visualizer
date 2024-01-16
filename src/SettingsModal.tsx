@@ -47,8 +47,7 @@ export const SettingsModal = (props: ModalProps) => {
       sx={modalStyle}
       open={props.modalOpen}
       onClose={() => props.setModalOpen(false)}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      aria-labelledby="settings-modal"
     >
       <Box>
         <IconButton

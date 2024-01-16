@@ -44,15 +44,27 @@ const ScrollableTable: React.FC<ScrollableTableProps> = ({ data }) => {
       <Table stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontSize: 20 }}>State</TableCell>
-            <TableCell sx={{ fontSize: 20 }}>Node</TableCell>
+            <TableCell sx={{ fontSize: 20, paddingLeft: 4.5 }}>State</TableCell>
+            <TableCell sx={{ fontSize: 20, paddingRight: 4 }}>Node</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((step, index) => (
             <TableRow key={index}>
-              <TableCell sx={{ fontSize: 20, fontFamily: "Courier, monospace" }}>{step.state}</TableCell>
-              <TableCell sx={{ fontSize: 20, fontFamily: "Courier, monospace" }}>{step.value}</TableCell>
+              <TableCell
+                sx={{ fontSize: 20, fontFamily: "Courier, monospace" }}
+              >
+                {step.state}
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontSize: 20,
+                  paddingLeft: 4.3,
+                  fontFamily: "Courier, monospace",
+                }}
+              >
+                {step.value}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

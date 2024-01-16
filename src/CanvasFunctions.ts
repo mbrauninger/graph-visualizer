@@ -188,7 +188,7 @@ export function drawCanvas(
 }
 
 /**
- * 
+ *
  * @param x - The x coordinate of the click in the canvas.
  * @param y - The y coordinate of the click in the canvas.
  * @param graph - The graph.
@@ -199,23 +199,32 @@ export function drawCanvas(
  *                             path occurs.
  * @param setGraph - The function to set the graph with the updated path.
  */
-export function handleNodeClick(x: number, y: number, graph: Graph, finished: boolean, distances: Record<string, number>, paths: Record<string, string[]>, savedFinishedGraph: Graph, setGraph: Function) {
+export function handleNodeClick(
+  x: number,
+  y: number,
+  graph: Graph,
+  finished: boolean,
+  distances: Record<string, number>,
+  paths: Record<string, string[]>,
+  savedFinishedGraph: Graph,
+  setGraph: Function,
+) {
   if (!finished) {
     return;
   }
   for (const node in graph) {
-    const distance = Math.sqrt(Math.pow(x - graph[node].attributes.x, 2) + Math.pow(y - graph[node].attributes.y, 2));
+    const distance = Math.sqrt(
+      Math.pow(x - graph[node].attributes.x, 2) +
+        Math.pow(y - graph[node].attributes.y, 2),
+    );
     if (distance < NODE_RADIUS) {
-        if (distances[node] === Infinity) return;
-        const currentGraph = JSON.parse(
-          JSON.stringify(savedFinishedGraph),
-        );
-        drawPath(currentGraph, paths[node], finished);
-        setGraph(currentGraph);
-        break;
+      if (distances[node] === Infinity) return;
+      const currentGraph = JSON.parse(JSON.stringify(savedFinishedGraph));
+      drawPath(currentGraph, paths[node], finished);
+      setGraph(currentGraph);
+      break;
     }
   }
-
 }
 
 /**
@@ -227,7 +236,10 @@ export function handleNodeClick(x: number, y: number, graph: Graph, finished: bo
  */
 export function isPointInsideNode(x: number, y: number, graph: Graph): boolean {
   for (const node in graph) {
-    const distance = Math.sqrt(Math.pow(x - graph[node].attributes.x, 2) + Math.pow(y - graph[node].attributes.y, 2));
+    const distance = Math.sqrt(
+      Math.pow(x - graph[node].attributes.x, 2) +
+        Math.pow(y - graph[node].attributes.y, 2),
+    );
     if (distance < NODE_RADIUS) {
       return true;
     }
